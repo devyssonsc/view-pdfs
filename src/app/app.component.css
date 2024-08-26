@@ -4,4 +4,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    #form-upload{
+        width: 100%;
+    }
 }
