@@ -21,8 +21,6 @@ export class UpdateDocumentComponent{
     const hiredName: string = this.inputHiredName.nativeElement.value;
     const contractValue: number = this.inputContractValue.nativeElement.value;
 
-
-
-    this.documentService.updateDocument(contractorName, hiredName, contractValue);
+    this.documentService.changeValues(contractorName, hiredName, contractValue);
   }
 }

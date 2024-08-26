@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { Subscription } from 'rxjs';
-import { Document } from '../../models/document.model';
 
 @Component({
   selector: 'app-view-document',
@@ -10,16 +9,30 @@ import { Document } from '../../models/document.model';
   templateUrl: './view-document.component.html',
   styleUrl: './view-document.component.css'
 })
-export class ViewDocumentComponent {
+export class ViewDocumentComponent implements OnInit {
   nomeContratante: string = '';
   nomeContratado: string = '';
   valorContrato: number = 0;
 
   constructor(private documentService: DocumentService){}
 
-  refresh() {
-    this.nomeContratante = this.documentService.document.getNomeContratante();
-    this.nomeContratado = this.documentService.document.getNomeContratado();
-    this.valorContrato = this.documentService.document.getValorContrato();
+  ngOnInit() {
+    this.documentService.nomeContratante.subscribe(
+      (nomeContratante) => {
+        this.nomeContratante = nomeContratante;
+      }
+    );
+
+    this.documentService.nomeContratado.subscribe(
+      (nomeContratado) => {
+        this.nomeContratado = nomeContratado;
+      }
+    );
+
+    this.documentService.valorContrato.subscribe(
+      (valorContrato) => {
+        this.valorContrato = valorContrato;
+      }
+    );
   }
 }
