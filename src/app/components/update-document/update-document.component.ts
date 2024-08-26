@@ -1,6 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { DocumentService } from '../../document.service';
+import { DocumentService } from '../../services/document.service';
 
 @Component({
   selector: 'app-update-document',

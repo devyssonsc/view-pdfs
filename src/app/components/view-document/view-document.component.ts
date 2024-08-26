@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentService } from '../../document.service';
+import { DocumentService } from '../../services/document.service';
 import { Subscription } from 'rxjs';
 import { Document } from '../../models/document.model';
 
