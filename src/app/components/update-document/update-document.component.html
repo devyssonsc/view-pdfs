@@ -1,0 +1,18 @@
+<div class="upload-document">
+    <form (ngSubmit)="onSubmit()">
+        <h1>Visualizar PDF</h1>
+        <div class="form-group">
+            <label for="contractor-name">Nome do contratante:</label>
+            <input #asContractorName type="text" class="form-control" id="contractor-name">
+        </div>
+        <div class="form-group">
+            <label for="hired-name">Nome do contratado:</label>
+            <input #asHiredName type="text" class="form-control" id="hired-name">
+        </div>
+        <div class="form-group">
+            <label for="contract-value">Valor do contrato:</label>
+            <input #asContractValue type="number" class="form-control" id="contract-value">
+        </div>
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+    </form>
+</div>
