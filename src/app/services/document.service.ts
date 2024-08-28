@@ -5,14 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class DocumentService {
-  private documentNomeContratante = new BehaviorSubject<string>("Contratante");
+  private documentNomeContratante = new BehaviorSubject<string>("");
   public nomeContratante = this.documentNomeContratante.asObservable();
 
-  private documentNomeContratado = new BehaviorSubject<string>("Contratado");
+  private documentNomeContratado = new BehaviorSubject<string>("");
   public nomeContratado = this.documentNomeContratado.asObservable();
 
-  private documentValorContrato = new BehaviorSubject<number>(9999);
+  private documentValorContrato = new BehaviorSubject<number | undefined>(undefined);
   public valorContrato = this.documentValorContrato.asObservable();
+
+  private documentHtmlContent = new BehaviorSubject<string>("");
+  public htmlContent = this.documentHtmlContent.asObservable();
 
   constructor() { }
 
@@ -20,5 +23,9 @@ export class DocumentService {
     this.documentNomeContratante.next(nomeContratante);
     this.documentNomeContratado.next(nomeContratado);
     this.documentValorContrato.next(valorContrato);
+  }
+
+  updateHtmlContent(htmlContent: string) {
+    this.documentHtmlContent.next(htmlContent);
   }
 }

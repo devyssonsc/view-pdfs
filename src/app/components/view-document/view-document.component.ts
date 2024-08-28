@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-view-document',
@@ -9,10 +8,12 @@ import { Subscription } from 'rxjs';
   templateUrl: './view-document.component.html',
   styleUrl: './view-document.component.css'
 })
-export class ViewDocumentComponent implements OnInit {
+export class ViewDocumentComponent implements OnInit, AfterViewInit {
+  @ViewChild('asContentContract', {static: false}) htmlContentValue!: ElementRef;
+
   nomeContratante: string = '';
   nomeContratado: string = '';
-  valorContrato: number = 0;
+  valorContrato?: number;
 
   constructor(private documentService: DocumentService){}
 
@@ -34,5 +35,10 @@ export class ViewDocumentComponent implements OnInit {
         this.valorContrato = valorContrato;
       }
     );
+  }
+
+  ngAfterViewInit(): void {
+    const htmlContent = this.htmlContentValue.nativeElement.innerHTML;
+    this.documentService.updateHtmlContent(htmlContent)
   }
 }
