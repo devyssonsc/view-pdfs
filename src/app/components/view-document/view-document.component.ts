@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 
 @Component({
@@ -8,36 +8,51 @@ import { DocumentService } from '../../services/document.service';
   templateUrl: './view-document.component.html',
   styleUrl: './view-document.component.css'
 })
-export class ViewDocumentComponent implements OnInit, AfterViewInit {
+export class ViewDocumentComponent implements AfterViewInit {
   @ViewChild('asContentContract', {static: false}) htmlContentValue!: ElementRef;
+
+  @ViewChildren('nomeContratante', {read: ElementRef}) nomesContratantes!: QueryList<ElementRef>;
+  @ViewChildren('nomeContratado', {read: ElementRef}) nomesContratados!: QueryList<ElementRef>;
+  @ViewChildren('valorContrato', {read: ElementRef}) valoresContratos!: QueryList<ElementRef>;
 
   nomeContratante: string = '';
   nomeContratado: string = '';
   valorContrato?: number;
 
-  constructor(private documentService: DocumentService){}
-
-  ngOnInit() {
+  constructor(private documentService: DocumentService, private renderer: Renderer2){}
+  
+  
+  ngAfterViewInit(): void {
     this.documentService.nomeContratante.subscribe(
       (nomeContratante) => {
-        this.nomeContratante = nomeContratante;
+        console.log(nomeContratante);
+        console.log(this.nomesContratantes);
+        this.nomesContratantes.forEach((nomeElement: ElementRef) => {
+          this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratante);
+        })
       }
     );
 
     this.documentService.nomeContratado.subscribe(
       (nomeContratado) => {
-        this.nomeContratado = nomeContratado;
+        console.log(nomeContratado);
+        console.log(this.nomesContratados);
+        this.nomesContratados.forEach((nomeElement: ElementRef) => {
+          this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratado);
+        })
       }
     );
 
     this.documentService.valorContrato.subscribe(
       (valorContrato) => {
-        this.valorContrato = valorContrato;
+        console.log(valorContrato);
+        console.log(this.valoresContratos);
+        this.valoresContratos.forEach((nomeElement: ElementRef) => {
+          this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', valorContrato);
+        })
       }
     );
-  }
 
-  ngAfterViewInit(): void {
     const htmlContent = this.htmlContentValue.nativeElement.innerHTML;
     this.documentService.updateHtmlContent(htmlContent)
   }

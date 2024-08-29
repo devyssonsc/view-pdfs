@@ -11,7 +11,7 @@ export class DocumentService {
   private documentNomeContratado = new BehaviorSubject<string>("");
   public nomeContratado = this.documentNomeContratado.asObservable();
 
-  private documentValorContrato = new BehaviorSubject<number | undefined>(undefined);
+  private documentValorContrato = new BehaviorSubject<number>(9999);
   public valorContrato = this.documentValorContrato.asObservable();
 
   private documentHtmlContent = new BehaviorSubject<string>("");
