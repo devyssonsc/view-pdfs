@@ -9,26 +9,31 @@ import { DocumentService } from '../../services/document.service';
   styleUrl: './view-document.component.css'
 })
 export class ViewDocumentComponent implements AfterViewInit {
-  @ViewChild('asContentContract', {static: false}) htmlContentValue!: ElementRef;
+  @ViewChild('asContentContract', { static: false }) htmlContentValue!: ElementRef;
 
-  @ViewChildren('nomeContratante', {read: ElementRef}) nomesContratantes!: QueryList<ElementRef>;
-  @ViewChildren('nomeContratado', {read: ElementRef}) nomesContratados!: QueryList<ElementRef>;
-  @ViewChildren('valorContrato', {read: ElementRef}) valoresContratos!: QueryList<ElementRef>;
+  @ViewChildren('nomeContratante', { read: ElementRef }) nomesContratantes!: QueryList<ElementRef>;
+  @ViewChildren('nomeContratado', { read: ElementRef }) nomesContratados!: QueryList<ElementRef>;
+  @ViewChildren('valorContrato', { read: ElementRef }) valoresContratos!: QueryList<ElementRef>;
+
+  htmlContent?: any;
 
   nomeContratante: string = '';
   nomeContratado: string = '';
-  valorContrato?: number;
+  valorContrato: number = 9999;
 
-  constructor(private documentService: DocumentService, private renderer: Renderer2){}
-  
-  
+  constructor(private documentService: DocumentService, private renderer: Renderer2) { }
+
+
   ngAfterViewInit(): void {
     this.documentService.nomeContratante.subscribe(
       (nomeContratante) => {
         this.nomesContratantes.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratante);
         })
+        this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
+        this.documentService.updateHtmlContent(this.htmlContent);
       }
+
     );
 
     this.documentService.nomeContratado.subscribe(
@@ -36,6 +41,8 @@ export class ViewDocumentComponent implements AfterViewInit {
         this.nomesContratados.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratado);
         })
+        this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
+        this.documentService.updateHtmlContent(this.htmlContent);
       }
     );
 
@@ -44,10 +51,9 @@ export class ViewDocumentComponent implements AfterViewInit {
         this.valoresContratos.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', valorContrato);
         })
+        this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
+        this.documentService.updateHtmlContent(this.htmlContent);
       }
     );
-
-    const htmlContent = this.htmlContentValue.nativeElement.innerHTML;
-    this.documentService.updateHtmlContent(htmlContent)
   }
 }

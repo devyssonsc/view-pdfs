@@ -61,7 +61,7 @@ export class UpdateDocumentComponent{
       Accept: 'application/pdf',
     });
 
-    this.httpClient.get(`${this.urlApi}/download/6`, { headers, responseType: 'blob' }).subscribe(
+    this.httpClient.get(`${this.urlApi}/download/20`, { headers, responseType: 'blob' }).subscribe(
       (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
