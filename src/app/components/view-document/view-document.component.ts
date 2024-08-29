@@ -25,8 +25,6 @@ export class ViewDocumentComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.documentService.nomeContratante.subscribe(
       (nomeContratante) => {
-        console.log(nomeContratante);
-        console.log(this.nomesContratantes);
         this.nomesContratantes.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratante);
         })
@@ -35,8 +33,6 @@ export class ViewDocumentComponent implements AfterViewInit {
 
     this.documentService.nomeContratado.subscribe(
       (nomeContratado) => {
-        console.log(nomeContratado);
-        console.log(this.nomesContratados);
         this.nomesContratados.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratado);
         })
@@ -45,8 +41,6 @@ export class ViewDocumentComponent implements AfterViewInit {
 
     this.documentService.valorContrato.subscribe(
       (valorContrato) => {
-        console.log(valorContrato);
-        console.log(this.valoresContratos);
         this.valoresContratos.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', valorContrato);
         })
