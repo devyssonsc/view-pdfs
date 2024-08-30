@@ -9,7 +9,7 @@ import { ViewDocumentComponent } from './components/view-document/view-document.
   standalone: true,
   imports: [RouterOutlet, FormUploadComponent, UpdateDocumentComponent, ViewDocumentComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.scss'
 })
 export class AppComponent {
   title = 'view-pdfs';

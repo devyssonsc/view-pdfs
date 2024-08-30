@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
   standalone: true,
   imports: [FormsModule, HttpClientModule],
   templateUrl: './update-document.component.html',
-  styleUrl: './update-document.component.css'
+  styleUrl: './update-document.component.scss'
 })
 export class UpdateDocumentComponent{
   @ViewChild('asContractorName', {static: false}) inputContractorName!: ElementRef;

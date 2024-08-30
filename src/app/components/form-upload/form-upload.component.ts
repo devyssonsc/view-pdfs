@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [HttpClientModule, CommonModule, FormsModule],
   templateUrl: './form-upload.component.html',
-  styleUrl: './form-upload.component.css'
+  styleUrl: './form-upload.component.scss'
 })
 export class FormUploadComponent {
   urlApi: string = 'http://localhost:8080/api/upload';

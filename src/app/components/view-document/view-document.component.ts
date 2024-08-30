@@ -6,7 +6,7 @@ import { DocumentService } from '../../services/document.service';
   standalone: true,
   imports: [],
   templateUrl: './view-document.component.html',
-  styleUrl: './view-document.component.css'
+  styleUrl: './view-document.component.scss'
 })
 export class ViewDocumentComponent implements AfterViewInit {
   @ViewChild('asContentContract', { static: false }) htmlContentValue!: ElementRef;
