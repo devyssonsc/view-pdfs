@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DocumentService } from '../../services/document.service';
 import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
@@ -21,7 +21,7 @@ export class UpdateDocumentComponent{
   htmlContent: string = '';
   pdfUrl?: string;
 
-  constructor(private documentService: DocumentService, private httpClient: HttpClient){}
+  constructor(private documentService: DocumentService, private httpClient: HttpClient, private renderer: Renderer2, private el: ElementRef){}
 
   onSubmit() {
     const contractorName: string = this.inputContractorName.nativeElement.value;
@@ -30,8 +30,8 @@ export class UpdateDocumentComponent{
 
     this.documentService.changeValues(contractorName, hiredName, contractValue);
 
-    const generateButton = document.getElementById('bt-generate') as HTMLButtonElement;
-    generateButton.disabled = false;
+    const generateButton = this.el.nativeElement.querySelector('#bt-generate') as HTMLButtonElement;
+    this.renderer.setProperty(generateButton, 'disabled', false);
   }
 
   generateContract() {
@@ -45,8 +45,8 @@ export class UpdateDocumentComponent{
     this.httpClient.post(`${this.urlApi}/upload`, this.htmlContent, { headers, responseType: 'text' }).subscribe(
       (resultado) => {
         console.log(resultado);
-        const downloadButton = document.getElementById('bt-download') as HTMLButtonElement;
-        downloadButton.disabled = false;
+        const downloadButton = this.el.nativeElement.querySelector('#bt-download') as HTMLButtonElement;
+        this.renderer.setProperty(downloadButton, 'disabled', false);
       },
       (error) => {
         console.log(error);

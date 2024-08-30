@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, QueryList, Renderer2, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, QueryList, Renderer2, SecurityContext, ViewChild, ViewChildren } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
+import DOMPurify from 'dompurify';
 
 @Component({
   selector: 'app-view-document',
@@ -28,10 +29,9 @@ export class ViewDocumentComponent implements AfterViewInit {
     this.documentService.nomeContratante.subscribe(
       (nomeContratante) => {
         this.nomesContratantes.forEach((nomeElement: ElementRef) => {
-          this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratante);
+          this.renderer.setProperty(nomeElement.nativeElement, 'innerText', nomeContratante);
         })
-        this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
-        this.documentService.updateHtmlContent(this.htmlContent);
+        this.sanitizeAmdUpdateHtml();
       }
 
     );
@@ -39,21 +39,34 @@ export class ViewDocumentComponent implements AfterViewInit {
     this.documentService.nomeContratado.subscribe(
       (nomeContratado) => {
         this.nomesContratados.forEach((nomeElement: ElementRef) => {
-          this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', nomeContratado);
-        })
-        this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
-        this.documentService.updateHtmlContent(this.htmlContent);
+          this.renderer.setProperty(nomeElement.nativeElement, 'innerText', nomeContratado);
+        });
+        this.sanitizeAmdUpdateHtml();
       }
     );
 
     this.documentService.valorContrato.subscribe(
       (valorContrato) => {
         this.valoresContratos.forEach((nomeElement: ElementRef) => {
-          this.renderer.setProperty(nomeElement.nativeElement, 'innerHTML', valorContrato);
-        })
-        this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
-        this.documentService.updateHtmlContent(this.htmlContent);
+          this.renderer.setProperty(nomeElement.nativeElement, 'innerText', valorContrato);
+        });
+        this.sanitizeAmdUpdateHtml();
       }
     );
+  }
+
+  private sanitizeAmdUpdateHtml() {
+    this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
+    
+    const sanitizedContent = DOMPurify.sanitize(this.htmlContent, {
+      ALLOWED_TAGS: ['div', 'p', 'b', 'h2', 'span'],
+      ALLOWED_ATTR: ['style']
+    });
+
+    if(sanitizedContent) {
+      this.documentService.updateHtmlContent(sanitizedContent);
+    } else{
+      console.error("Sanitized content is null");
+    }
   }
 }
