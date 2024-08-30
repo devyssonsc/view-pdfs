@@ -45,14 +45,14 @@ export class UpdateDocumentComponent{
     this.httpClient.post(`${this.urlApi}/upload`, this.htmlContent, { headers, responseType: 'text' }).subscribe(
       (resultado) => {
         console.log(resultado);
+        const downloadButton = document.getElementById('bt-download') as HTMLButtonElement;
+        downloadButton.disabled = false;
       },
       (error) => {
         console.log(error);
       }
     )
 
-    const downloadButton = document.getElementById('bt-download') as HTMLButtonElement;
-    downloadButton.disabled = false;
   }
 
   downloadPdf() {
@@ -61,7 +61,7 @@ export class UpdateDocumentComponent{
       Accept: 'application/pdf',
     });
 
-    this.httpClient.get(`${this.urlApi}/download/20`, { headers, responseType: 'blob' }).subscribe(
+    this.httpClient.get(`${this.urlApi}/download/10`, { headers, responseType: 'blob' }).subscribe(
       (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
