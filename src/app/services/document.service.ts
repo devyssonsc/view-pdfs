@@ -11,7 +11,7 @@ export class DocumentService {
   private documentNomeContratado = new BehaviorSubject<string>("");
   public nomeContratado$ = this.documentNomeContratado.asObservable();
 
-  private documentValorContrato = new BehaviorSubject<number>(9999);
+  private documentValorContrato = new BehaviorSubject<string>("");
   public valorContrato$ = this.documentValorContrato.asObservable();
 
   private documentHtmlContent = new BehaviorSubject<string>("");
@@ -22,7 +22,7 @@ export class DocumentService {
 
   constructor() { }
 
-  changeValues(nomeContratante: string, nomeContratado: string, valorContrato: number) {
+  changeValues(nomeContratante: string, nomeContratado: string, valorContrato: string) {
     this.documentNomeContratante.next(nomeContratante);
     this.documentNomeContratado.next(nomeContratado);
     this.documentValorContrato.next(valorContrato);

@@ -28,9 +28,11 @@ export class UpdateDocumentComponent{
   onSubmit() {
     const contractorName: string = this.inputContractorName.nativeElement.value;
     const hiredName: string = this.inputHiredName.nativeElement.value;
-    const contractValue: number = this.inputContractValue.nativeElement.value;
+    const contractValue: number = Number(this.inputContractValue.nativeElement.value);
 
-    this.documentService.changeValues(contractorName, hiredName, contractValue);
+    const formattedContractValue = contractValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', currencyDisplay: 'symbol' });
+
+    this.documentService.changeValues(contractorName, hiredName, formattedContractValue);
     if(this.imageString){
       this.documentService.setImage(this.imageString);
     }
@@ -52,7 +54,9 @@ export class UpdateDocumentComponent{
 
   generateContract() {
     this.documentService.htmlContent$.subscribe(
-      (htmlContent) => this.htmlContent = htmlContent
+      (htmlContent) => {
+      this.htmlContent = htmlContent
+      }
     );
 
     console.log(this.htmlContent);
