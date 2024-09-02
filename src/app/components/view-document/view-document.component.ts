@@ -1,11 +1,12 @@
 import { AfterViewInit, Component, ElementRef, QueryList, Renderer2, SecurityContext, ViewChild, ViewChildren } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import DOMPurify from 'dompurify';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-view-document',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './view-document.component.html',
   styleUrl: './view-document.component.scss'
 })
@@ -31,7 +32,7 @@ export class ViewDocumentComponent implements AfterViewInit {
     this.documentService.image$.subscribe(
       (image) => {
         this.image = image;
-        this.sanitizeAmdUpdateHtml();
+        this.sanitizeAndUpdateHtml();
       }
     )
 
@@ -40,7 +41,7 @@ export class ViewDocumentComponent implements AfterViewInit {
         this.nomesContratantes.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerText', nomeContratante);
         })
-        this.sanitizeAmdUpdateHtml();
+        this.sanitizeAndUpdateHtml();
       }
 
     );
@@ -50,7 +51,7 @@ export class ViewDocumentComponent implements AfterViewInit {
         this.nomesContratados.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerText', nomeContratado);
         });
-        this.sanitizeAmdUpdateHtml();
+        this.sanitizeAndUpdateHtml();
       }
     );
 
@@ -59,18 +60,15 @@ export class ViewDocumentComponent implements AfterViewInit {
         this.valoresContratos.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerText', valorContrato);
         });
-        this.sanitizeAmdUpdateHtml();
+        this.sanitizeAndUpdateHtml();
       }
     );
   }
 
-  private sanitizeAmdUpdateHtml() {
+  private sanitizeAndUpdateHtml() {
     this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
 
-    console.log(this.image);
     this.htmlContent = this.htmlContent.replace("background-image: url(&quot;null&quot;);", `background-image: url(${this.image});`)
-    
-    console.log(this.htmlContent);
 
     const sanitizedContent = DOMPurify.sanitize(this.htmlContent, {
       ALLOWED_TAGS: ['div', 'p', 'b', 'h2', 'span'],
