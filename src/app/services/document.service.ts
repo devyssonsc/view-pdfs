@@ -6,16 +6,19 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class DocumentService {
   private documentNomeContratante = new BehaviorSubject<string>("");
-  public nomeContratante = this.documentNomeContratante.asObservable();
+  public nomeContratante$ = this.documentNomeContratante.asObservable();
 
   private documentNomeContratado = new BehaviorSubject<string>("");
-  public nomeContratado = this.documentNomeContratado.asObservable();
+  public nomeContratado$ = this.documentNomeContratado.asObservable();
 
   private documentValorContrato = new BehaviorSubject<number>(9999);
-  public valorContrato = this.documentValorContrato.asObservable();
+  public valorContrato$ = this.documentValorContrato.asObservable();
 
   private documentHtmlContent = new BehaviorSubject<string>("");
-  public htmlContent = this.documentHtmlContent.asObservable();
+  public htmlContent$ = this.documentHtmlContent.asObservable();
+
+  private imageSubject = new BehaviorSubject<string | null>(null);
+  public image$ = this.imageSubject.asObservable();
 
   constructor() { }
 
@@ -27,5 +30,9 @@ export class DocumentService {
 
   updateHtmlContent(htmlContent: string) {
     this.documentHtmlContent.next(htmlContent);
+  }
+
+  setImage(image: string) {
+    this.imageSubject.next(image);
   }
 }

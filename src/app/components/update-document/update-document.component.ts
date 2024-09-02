@@ -16,6 +16,8 @@ export class UpdateDocumentComponent{
   @ViewChild('asHiredName', {static: false}) inputHiredName!: ElementRef;
   @ViewChild('asContractValue', {static: false}) inputContractValue!: ElementRef;
 
+  imageString: string | null = null;
+
   urlApi: string = "http://localhost:8080/api";
 
   htmlContent: string = '';
@@ -29,19 +31,33 @@ export class UpdateDocumentComponent{
     const contractValue: number = this.inputContractValue.nativeElement.value;
 
     this.documentService.changeValues(contractorName, hiredName, contractValue);
+    if(this.imageString){
+      this.documentService.setImage(this.imageString);
+    }
 
     const generateButton = this.el.nativeElement.querySelector('#bt-generate') as HTMLButtonElement;
     this.renderer.setProperty(generateButton, 'disabled', false);
   }
 
+  onFileSelected(e: Event) {
+    const imageFile = (e.target as HTMLInputElement).files?.[0];
+    if(imageFile) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageString = reader.result as string;
+      };
+      reader.readAsDataURL(imageFile);
+    }
+  }
+
   generateContract() {
-    this.documentService.htmlContent.subscribe(
+    this.documentService.htmlContent$.subscribe(
       (htmlContent) => this.htmlContent = htmlContent
     );
 
     console.log(this.htmlContent);
 
-    const headers = { 'Content-Type': 'text/html' };
+    const headers = new HttpHeaders({ 'Content-Type': 'text/html' });
     this.httpClient.post(`${this.urlApi}/upload`, this.htmlContent, { headers, responseType: 'text' }).subscribe(
       (resultado) => {
         console.log(resultado);
@@ -61,7 +77,7 @@ export class UpdateDocumentComponent{
       Accept: 'application/pdf',
     });
 
-    this.httpClient.get(`${this.urlApi}/download/10`, { headers, responseType: 'blob' }).subscribe(
+    this.httpClient.get(`${this.urlApi}/download/20`, { headers, responseType: 'blob' }).subscribe(
       (blob) => {
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');

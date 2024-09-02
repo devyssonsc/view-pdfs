@@ -18,6 +18,8 @@ export class ViewDocumentComponent implements AfterViewInit {
 
   htmlContent?: any;
 
+  image: string | null = null;
+
   nomeContratante: string = '';
   nomeContratado: string = '';
   valorContrato: number = 9999;
@@ -26,7 +28,14 @@ export class ViewDocumentComponent implements AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    this.documentService.nomeContratante.subscribe(
+    this.documentService.image$.subscribe(
+      (image) => {
+        this.image = image;
+        this.sanitizeAmdUpdateHtml();
+      }
+    )
+
+    this.documentService.nomeContratante$.subscribe(
       (nomeContratante) => {
         this.nomesContratantes.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerText', nomeContratante);
@@ -36,7 +45,7 @@ export class ViewDocumentComponent implements AfterViewInit {
 
     );
 
-    this.documentService.nomeContratado.subscribe(
+    this.documentService.nomeContratado$.subscribe(
       (nomeContratado) => {
         this.nomesContratados.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerText', nomeContratado);
@@ -45,7 +54,7 @@ export class ViewDocumentComponent implements AfterViewInit {
       }
     );
 
-    this.documentService.valorContrato.subscribe(
+    this.documentService.valorContrato$.subscribe(
       (valorContrato) => {
         this.valoresContratos.forEach((nomeElement: ElementRef) => {
           this.renderer.setProperty(nomeElement.nativeElement, 'innerText', valorContrato);
@@ -57,7 +66,12 @@ export class ViewDocumentComponent implements AfterViewInit {
 
   private sanitizeAmdUpdateHtml() {
     this.htmlContent = this.htmlContentValue.nativeElement.innerHTML;
+
+    console.log(this.image);
+    this.htmlContent = this.htmlContent.replace("background-image: url(&quot;null&quot;);", `background-image: url(${this.image});`)
     
+    console.log(this.htmlContent);
+
     const sanitizedContent = DOMPurify.sanitize(this.htmlContent, {
       ALLOWED_TAGS: ['div', 'p', 'b', 'h2', 'span'],
       ALLOWED_ATTR: ['style']
