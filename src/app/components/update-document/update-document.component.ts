@@ -17,6 +17,7 @@ export class UpdateDocumentComponent{
   @ViewChild('asContractValue', {static: false}) inputContractValue!: ElementRef;
 
   imageString: string | null = null;
+  imageFileName: string | null = null;
 
   urlApi: string = "http://localhost:8080/api";
 
@@ -30,7 +31,7 @@ export class UpdateDocumentComponent{
     const hiredName: string = this.inputHiredName.nativeElement.value;
     const contractValue: number = Number(this.inputContractValue.nativeElement.value);
 
-    const formattedContractValue = contractValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', currencyDisplay: 'symbol' });
+    const formattedContractValue = contractValue.toLocaleString('pt-BR');
 
     this.documentService.changeValues(contractorName, hiredName, formattedContractValue);
     if(this.imageString){
@@ -44,6 +45,9 @@ export class UpdateDocumentComponent{
   onFileSelected(e: Event) {
     const imageFile = (e.target as HTMLInputElement).files?.[0];
     if(imageFile) {
+
+      this.imageFileName = imageFile.name;
+
       const reader = new FileReader();
       reader.onload = () => {
         this.imageString = reader.result as string;

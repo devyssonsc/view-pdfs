@@ -25,7 +25,7 @@ export class DocumentService {
   changeValues(nomeContratante: string, nomeContratado: string, valorContrato: string) {
     this.documentNomeContratante.next(nomeContratante);
     this.documentNomeContratado.next(nomeContratado);
-    this.documentValorContrato.next(valorContrato);
+    this.documentValorContrato.next('R$ ' + valorContrato);
   }
 
   updateHtmlContent(htmlContent: string) {

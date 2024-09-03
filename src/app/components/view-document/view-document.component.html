@@ -1,22 +1,22 @@
 <div #asContentContract>
-    <div id="divida" style="margin-top: 10px; width: 100%; height: 400px; overflow-y: auto; border-radius: 10px; padding: 10px; font-family: Arial, Helvetica, sans-serif;">
-        <div style="min-height: 70px;display: flex; justify-content: flex-start; align-items: center; padding: 10px; background: linear-gradient(45deg, purple, pink);">
-            <div [style.backgroundImage]="'url(' + image + ')'" style="width: 200px; height: 125px; background-size: cover; background-position: center;" ></div>
-        </div>
+    <div id="divida" style="width: 100%; height: 500px; overflow-y: auto; border-radius: 10px; padding: 10px; font-family: Arial, Helvetica, sans-serif; position: relative;">
+        <!-- <div style="width: 200px; height: 125px; padding: 2px;display: flex; justify-content: flex-start; align-items: center; margin: auto; background: linear-gradient(45deg, purple, pink); position: absolute; right: 20px; top: 20px;">
+        </div> -->
+        <div [style.backgroundImage]="'url(' + image + ')'" style="width: 200px; height: 125px; background-size: cover; background-position: center; margin: auto; position: absolute; top: 70px; right: 20px;" ></div>
 
-        <h2 style="margin-top: 10px;">Contrato</h2>
+        <h2 style="margin-top: 10px; margin-bottom: 30px; text-align: center;">Contrato</h2>
 
-        <p>Nome contratante: <span #nomeContratante></span></p>
-        <p>Nome do contratado: <span #nomeContratado></span></p>
-        <p>Valor do contrato: <span #valorContrato></span></p>
+        <p>Nome contratante: <span #nomeContratante style="text-transform: uppercase; font-weight: 700;"></span></p>
+        <p>Nome do contratado: <span #nomeContratado style="text-transform: uppercase; font-weight: 700;"></span></p>
+        <p>Valor do contrato: <span #valorContrato style="font-weight: 700;"></span></p>
 
-        <p>Lorem <b><span #nomeContratante></span></b> ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
+        <p>Lorem <b><span #nomeContratante style="text-transform: uppercase; font-weight: 700;"></span></b> ipsum dolor sit amet consectetur adipisicing elit. Obcaecati
             labore deserunt sit molestiae iusto corrupti facere pariatur modi dolores doloribus optio minima
             consequuntur, nihil iure quae voluptatum. Aut, quibusdam eligendi.</p>
-        <p>Lorem ipsum dolor sit amet <b><span #valorContrato></span></b> consectetur adipisicing elit. Obcaecati labore
+        <p>Lorem ipsum dolor sit amet <span #valorContrato style="font-weight: 700;"></span> consectetur adipisicing elit. Obcaecati labore
             deserunt sit molestiae iusto corrupti facere pariatur modi dolores doloribus optio minima consequuntur,
             nihil iure quae voluptatum. Aut, quibusdam eligendi.</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati labore deserunt sit molestiae iusto
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati labore <span #nomeContratado style="text-transform: uppercase; font-weight: 700;"></span> deserunt sit molestiae iusto
             corrupti facere pariatur modi dolores doloribus optio minima consequuntur, nihil iure quae voluptatum. Aut,
             quibusdam eligendi.</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati labore deserunt sit molestiae iusto
